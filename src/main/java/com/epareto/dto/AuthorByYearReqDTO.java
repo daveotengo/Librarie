@@ -10,11 +10,17 @@ import javax.validation.constraints.Size;
 
 
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
-@Data
+@Getter
+@Setter
 public class AuthorByYearReqDTO {
 	
 
+	@NotEmpty
+	@NotNull(message="cannot be null")
+	@Size(min=4, message="cannot be blank")
 	private String year;
 
 

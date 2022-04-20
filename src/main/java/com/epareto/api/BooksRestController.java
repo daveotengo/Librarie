@@ -8,6 +8,10 @@ import java.util.Optional;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -43,10 +47,13 @@ public class BooksRestController {
 	private GenreRepository genreRepository;
 
 	@PostMapping("book/author")
-	public RespDTO findBookByAuthor(@RequestBody BookByAuthorReqDTO genericReqDTO) {
+	public ResponseEntity<RespDTO> findBookByAuthor(@RequestBody BookByAuthorReqDTO genericReqDTO, Pageable pageable) {
+		
 		RespDTO resp = new RespDTO();
 		List<Book> book = new ArrayList<Book>();
 		Optional<Author> author = null;
+		
+		Pageable pageWithThreeElements = PageRequest.of(0, 3,Sort.by("title").descending());
 
 		if (genericReqDTO.getId() != null || genericReqDTO.getUsername() != null || genericReqDTO.getFirstName() != null
 				|| genericReqDTO.getLastName() != null) {
@@ -57,7 +64,7 @@ public class BooksRestController {
 					genericReqDTO.getId(), genericReqDTO.getFirstName(), genericReqDTO.getLastName());
 
 			if (author.isPresent()) {
-				book = bookService.findBookByAuthor(author.get());
+				book = bookService.findBookByAuthor(author.get(),pageWithThreeElements);
 				resp.setMessage("Data Fetched Successfully");
 				resp.setStatus("00");
 			} else {
@@ -68,23 +75,34 @@ public class BooksRestController {
 		} else {
 			resp.setMessage("Enter Search Param");
 			resp.setStatus("02");
+			
+			return ResponseEntity.badRequest().body(resp);
 		}
+		
+		
 
 		resp.setData(book);
 
-		return resp;
+		return ResponseEntity.ok(resp);
 	}
 
 	@PostMapping("book/year")
-	public RespDTO findBookByYear(@Valid @RequestBody AuthorByYearReqDTO genericReqDTO, BindingResult result) {
+	public  ResponseEntity<RespDTO> findBookByYear(@Valid @RequestBody AuthorByYearReqDTO genericReqDTO,Pageable pageable) {
+		
 		RespDTO resp = new RespDTO();
 		List<Book> book = new ArrayList<Book>();
+		
+		Pageable pageWithThreeElements = PageRequest.of(0, 3,Sort.by("title").descending());
+
 
 		if (genericReqDTO.getYear() != null) {
-			book = bookService.findBookByYear(genericReqDTO.getYear());
+			
+			book = bookService.findBookByYear(genericReqDTO.getYear(),pageWithThreeElements);
 			resp.setMessage("Data Fetched Successfully");
 			resp.setStatus("00");
+			
 		} else {
+			
 			resp.setMessage("No Data");
 			resp.setStatus("01");
 
@@ -92,38 +110,46 @@ public class BooksRestController {
 
 		resp.setData(book);
 
-		return resp;
+		return ResponseEntity.ok(resp);
 	}
 
 	@PostMapping("book/genre")
-	public RespDTO findBookByGenre(@RequestBody AuthorByGenreReqDTO genericReqDTO) {
-
+	public ResponseEntity<RespDTO> findBookByGenre(@RequestBody AuthorByGenreReqDTO genericReqDTO,Pageable pageable) {
 
 		RespDTO resp = new RespDTO();
 
 		List<Book> book = new ArrayList<Book>();
+		
+		Pageable pageWithThreeElements = PageRequest.of(0, 3,Sort.by("title").descending());
+
 
 		if (genericReqDTO.getId() != null || genericReqDTO.getName() != null) {
-			
-			Optional<Genre> gernre = genreRepository.findGenreByNameOrId(genericReqDTO.getName(), genericReqDTO.getId());
 
+			Optional<Genre> gernre = genreRepository.findGenreByNameOrId(genericReqDTO.getName(),
+					genericReqDTO.getId());
 
 			if (gernre.isPresent()) {
-				book = bookService.findBookByGenre(gernre.get());
+
+				book = bookService.findBookByGenre(gernre.get(),pageWithThreeElements);
 				resp.setMessage("Data Fetched Successfully");
 				resp.setStatus("00");
+
 			} else {
+
 				resp.setMessage("No Data");
 				resp.setStatus("01");
 
 			}
 		} else {
+
 			resp.setMessage("Enter Search Param");
 			resp.setStatus("02");
+			return ResponseEntity.badRequest().body(resp);
+
 		}
 		resp.setData(book);
 
-		return resp;
+		return ResponseEntity.ok(resp);
 	}
 
 }

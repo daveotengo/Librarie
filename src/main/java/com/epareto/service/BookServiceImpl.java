@@ -3,6 +3,7 @@ package com.epareto.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.epareto.models.Author;
@@ -15,18 +16,18 @@ public class BookServiceImpl implements BookService{
 @Autowired
 private BookRepository bookRepository;
 	@Override
-	public List<Book>  findBookByAuthor(Author author) {
-		return bookRepository.findBookByAuthor(author);
+	public List<Book>  findBookByAuthor(Author author,Pageable pageable) {
+		return bookRepository.findAllByAuthor(author, pageable);
 	}
 
 	@Override
-	public List<Book>  findBookByGenre(Genre genre) {
-		return bookRepository.findBookByGenre(genre);
+	public List<Book>  findBookByGenre(Genre genre,Pageable pageable) {
+		return bookRepository.findAllByGenre(genre, pageable);
 	}
 
 	@Override
-	public List<Book>  findBookByYear(String year) {
-		return bookRepository.findBookByYear(year);
+	public List<Book>  findBookByYear(String year,Pageable pageable) {
+		return bookRepository.findAllByYear(year, pageable);
 	}
 	
 
