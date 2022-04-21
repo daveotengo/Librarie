@@ -21,6 +21,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.epareto.dto.BookByAuthorReqDTO;
 import com.epareto.dto.AuthorByGenreReqDTO;
+import com.epareto.dto.AuthorByIsbnReqDTO;
+import com.epareto.dto.AuthorByTitleReqDTO;
 import com.epareto.dto.AuthorByYearReqDTO;
 import com.epareto.dto.RespDTO;
 import com.epareto.models.Author;
@@ -152,4 +154,58 @@ public class BooksRestController {
 		return ResponseEntity.ok(resp);
 	}
 
+	
+	@PostMapping("book/title")
+	public  ResponseEntity<RespDTO> findBookByTitle(@Valid @RequestBody AuthorByTitleReqDTO genericReqDTO,Pageable pageable) {
+		
+		RespDTO resp = new RespDTO();
+		List<Book> book = new ArrayList<Book>();
+		
+		Pageable pageWithThreeElements = PageRequest.of(0, 3,Sort.by("title").descending());
+
+
+		if (genericReqDTO.getTitle() != null) {
+			
+			book = bookService.findBookByTitle(genericReqDTO.getTitle(),pageWithThreeElements);
+			resp.setMessage("Data Fetched Successfully");
+			resp.setStatus("00");
+			
+		} else {
+			
+			resp.setMessage("No Data");
+			resp.setStatus("01");
+
+		}
+
+		resp.setData(book);
+
+		return ResponseEntity.ok(resp);
+	}
+	
+	@PostMapping("book/isbn")
+	public  ResponseEntity<RespDTO> findBookByIsbn(@Valid @RequestBody AuthorByIsbnReqDTO genericReqDTO,Pageable pageable) {
+		
+		RespDTO resp = new RespDTO();
+		List<Book> book = new ArrayList<Book>();
+		
+		Pageable pageWithThreeElements = PageRequest.of(0, 3,Sort.by("title").descending());
+
+
+		if (genericReqDTO.getIsbn() != null) {
+			
+			book = bookService.findBookByIsbn(genericReqDTO.getIsbn(),pageWithThreeElements);
+			resp.setMessage("Data Fetched Successfully");
+			resp.setStatus("00");
+			
+		} else {
+			
+			resp.setMessage("No Data");
+			resp.setStatus("01");
+
+		}
+
+		resp.setData(book);
+
+		return ResponseEntity.ok(resp);
+	}
 }

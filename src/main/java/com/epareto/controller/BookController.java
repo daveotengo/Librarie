@@ -9,8 +9,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 public class BookController {
 	
-	@RequestMapping(path = { "/library" }, method = GET)
-	public String showBookPage() {
+	@RequestMapping(path = { "/" , "/library"}, method = GET)
+	public String showLibrary() {
 		return "library";
 	}
 	

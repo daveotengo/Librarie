@@ -17,6 +17,10 @@ public interface BookService {
 	public List<Book> findBookByGenre(Genre genre,Pageable pageable);
 	
 	public List<Book>  findBookByYear(String year, Pageable pageable);
+	
+	public List<Book>  findBookByTitle(String title, Pageable pageable);
+
+	public List<Book> findBookByIsbn(String isbn, Pageable pageable);
 
 	
 	

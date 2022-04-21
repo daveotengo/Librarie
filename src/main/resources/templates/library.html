@@ -1,10 +1,203 @@
 <!DOCTYPE html>
 <html>
 <head>
+<!-- Base Css Files -->
+<link th:href="@{/css/bootstrap.min.css}" rel="stylesheet" />
+
+<!-- Font Icons -->
+<link th:href="@{/assets/font-awesome/css/font-awesome.min.css}"
+	rel="stylesheet" />
+<link rel="stylesheet" th:href="@{/assets/ionicon/css/ionicons.min.css}" />
+<link rel="stylesheet"
+	th:href="@{/css/material-design-iconic-font.min.css}">
+<!--          <link th:href="@{/rportal/assets/toggles/toggles.css}" th:href="@{assets/toggles/toggles.css }"rel="stylesheet" />
+ -->
+<!-- animate css -->
+<link rel="stylesheet" th:href="@{/css/animate.css}" />
+
+<!-- Waves-effect -->
+<link rel="stylesheet" th:href="@{/css/waves-effect.css}">
+
+<!-- sweet alerts -->
+<link rel="stylesheet"
+	th:href="@{/assets/sweet-alert/sweet-alert.min.css}">
+
+<!-- Custom Files -->
+<link rel="stylesheet" type="text/css" th:href="@{/css/helper.css}" />
+<link rel="stylesheet" type="text/css" th:href="@{/css/style.css}" />
+
+<link rel="stylesheet" type="text/css"
+	th:href="@{/assets/datatables/jquery.dataTables.min.css}" />
+
+<link
+	th:href="@{ https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css }" />
+<link
+	th:href="@{ https://cdn.datatables.net/buttons/1.6.1/css/buttons.dataTables.min.css }" />
+
+<script
+	th:src="@{//cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment-with-locales.js}"></script>
+
+
+<script th:src="@{js/modernizr.min.js}"></script>
+
 <meta charset="UTF-8">
 <title>Insert title here</title>
 </head>
 <body>
-Hi Works
+
+	<div class="panel-body">
+		<div class="row">
+			<div class="col-md-12 col-sm-12 col-xs-12">
+				<table id="datatable" style="width: 100%"
+					class="table table-striped table-hover table-bordered">
+					<thead>
+						<tr>
+
+
+							<th>Title</th>
+							<th>Year</th>
+							<th>ISBN</th>
+							<th>Author</th>
+							<th>Genre</th>
+							<th>Create Date</th>
+							<th>Modify Date</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+
+
+						</tr>
+
+					</tbody>
+
+				</table>
+			</div>
+		</div>
+	</div>
+
+
+
+
+
+	<!-- CUSTOM JS -->
+	<script th:src="@{https://code.jquery.com/jquery-3.6.0.min.js}"></script>
+
+	<script
+		src=" https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js "></script>
+
+	<script
+		src=" https://cdn.datatables.net/buttons/1.6.1/js/dataTables.buttons.min.js "></script>
+	<script
+		src=" https://cdn.datatables.net/buttons/1.6.1/js/buttons.flash.min.js "></script>
+	<script
+		src=" https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js "></script>
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js "></script>
+	<script
+		src=" https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js "></script>
+	<script
+		src=" https://cdn.datatables.net/buttons/1.6.1/js/buttons.html5.min.js "></script>
+	<script
+		src=" https://cdn.datatables.net/buttons/1.6.1/js/buttons.print.min.js "></script>
+
+	<script th:src="@{assets/datatables/jquery.dataTables.min.js}"></script>
+	<script th:src="@{assets/datatables/dataTables.bootstrap.js}"></script>
+
+
+
+	<script type="text/javascript">
+		getDataByAuthor();
+
+		function getDataByAuthor() {
+
+			// $("#loading").show();
+			var reqObj = {};
+
+			reqObj["id"] = "1";
+
+			$.ajax({
+				'url' : "[[@{api/books/book/author}]]",
+
+				'method' : "POST",
+
+				'data' : JSON.stringify(reqObj),
+
+				'contentType' : 'application/json',
+
+			}).done(function(data) {
+				console.log(data);
+				// $("#loading").hide();
+
+				$('#datatable').dataTable({
+					// "scrollY": 500,
+					"scrollX" : true,
+					"processing" : true,
+					"destroy" : true,
+					"pageLength" : 10,
+
+					"aaData" : data.data,
+
+					dom : 'lBfrtip',
+					buttons : [ 'copy', 'csv', 'excel', 'pdf', 'print' ],
+
+					//"order" : [ 0, "desc" ],
+
+					"columns" : [
+
+					{
+						"data" : "title"
+					},
+
+					{
+						"data" : "year"
+					},
+
+					{
+						"data" : "isbn"
+					},
+
+					{
+						"data" : "author"
+					},
+
+					{
+						"data" : "genre.name"
+					},
+
+					{
+						"data" : "createDate"
+					},
+
+					{
+						"data" : "modifyDate"
+					},
+
+					],
+
+					"columnDefs" : [
+
+					{
+						targets : [ 6, 5 ],
+						"render" : function(data) {
+							return moment(data).format("YYYY-MM-DD HH:mm:ss")
+						},
+					},
+					{
+						targets : [ 3],
+						"render" : function(data) {
+							console.log(data)
+							return data.firstName +" "+data.lastName;
+						},
+					}
+
+					]
+
+				})
+
+			});
+
+		}
+	</script>
 </body>
 </html>

@@ -29,6 +29,16 @@ private BookRepository bookRepository;
 	public List<Book>  findBookByYear(String year,Pageable pageable) {
 		return bookRepository.findAllByYear(year, pageable);
 	}
+
+	@Override
+	public List<Book> findBookByTitle(String title, Pageable pageable) {
+		return bookRepository.findAllByTitle(title,pageable);
+	}
+
+	@Override
+	public List<Book> findBookByIsbn(String isbn, Pageable pageable) {
+		return bookRepository.findAllByIsbn(isbn, pageable);
+	}
 	
 
 

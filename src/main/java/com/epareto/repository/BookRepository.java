@@ -20,6 +20,11 @@ public interface BookRepository extends JpaRepository<Book, Long>{
 	
 	public List<Book>  findAllByYear(String year,Pageable pageable);
 
+	public List<Book> findAllByTitle(String title, Pageable pageable);
+	
+	public List<Book> findAllByIsbn(String isbn, Pageable pageable);
+
+
 
 
 }
