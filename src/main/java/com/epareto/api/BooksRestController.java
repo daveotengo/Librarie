@@ -55,7 +55,7 @@ public class BooksRestController {
 		List<Book> book = new ArrayList<Book>();
 		Optional<Author> author = null;
 		
-		Pageable pageWithThreeElements = PageRequest.of(0, 3,Sort.by("title").descending());
+		Pageable pageWithThreeElements = PageRequest.of(0, 3,Sort.by("title").ascending());
 
 		if (genericReqDTO.getId() != null || genericReqDTO.getUsername() != null || genericReqDTO.getFirstName() != null
 				|| genericReqDTO.getLastName() != null) {
@@ -94,7 +94,7 @@ public class BooksRestController {
 		RespDTO resp = new RespDTO();
 		List<Book> book = new ArrayList<Book>();
 		
-		Pageable pageWithThreeElements = PageRequest.of(0, 3,Sort.by("title").descending());
+		Pageable pageWithThreeElements = PageRequest.of(0, 3,Sort.by("title").ascending());
 
 
 		if (genericReqDTO.getYear() != null) {
@@ -122,7 +122,7 @@ public class BooksRestController {
 
 		List<Book> book = new ArrayList<Book>();
 		
-		Pageable pageWithThreeElements = PageRequest.of(0, 3,Sort.by("title").descending());
+		Pageable pageWithThreeElements = PageRequest.of(0, 3,Sort.by("title").ascending());
 
 
 		if (genericReqDTO.getId() != null || genericReqDTO.getName() != null) {
@@ -161,7 +161,7 @@ public class BooksRestController {
 		RespDTO resp = new RespDTO();
 		List<Book> book = new ArrayList<Book>();
 		
-		Pageable pageWithThreeElements = PageRequest.of(0, 3,Sort.by("title").descending());
+		Pageable pageWithThreeElements = PageRequest.of(0, 3,Sort.by("title").ascending());
 
 
 		if (genericReqDTO.getTitle() != null) {
@@ -188,7 +188,7 @@ public class BooksRestController {
 		RespDTO resp = new RespDTO();
 		List<Book> book = new ArrayList<Book>();
 		
-		Pageable pageWithThreeElements = PageRequest.of(0, 3,Sort.by("title").descending());
+		Pageable pageWithThreeElements = PageRequest.of(0, 3,Sort.by("title").ascending());
 
 
 		if (genericReqDTO.getIsbn() != null) {
