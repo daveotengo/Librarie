@@ -2,6 +2,8 @@ package com.epareto.dto;
 
 import java.time.LocalDateTime;
 
+import javax.validation.constraints.Size;
+
 import lombok.Data;
 
 @Data

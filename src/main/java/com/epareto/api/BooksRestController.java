@@ -37,7 +37,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @RestController
-@RequestMapping("api/books")
+@RequestMapping("api")
 public class BooksRestController {
 
 	@Autowired
@@ -48,7 +48,7 @@ public class BooksRestController {
 	@Autowired
 	private GenreRepository genreRepository;
 
-	@PostMapping("book/author")
+	@PostMapping("books/author")
 	public ResponseEntity<RespDTO> findBookByAuthor(@RequestBody BookByAuthorReqDTO genericReqDTO, Pageable pageable) {
 		
 		RespDTO resp = new RespDTO();
@@ -88,7 +88,7 @@ public class BooksRestController {
 		return ResponseEntity.ok(resp);
 	}
 
-	@PostMapping("book/year")
+	@PostMapping("books/year")
 	public  ResponseEntity<RespDTO> findBookByYear(@Valid @RequestBody AuthorByYearReqDTO genericReqDTO,Pageable pageable) {
 		
 		RespDTO resp = new RespDTO();
@@ -115,7 +115,7 @@ public class BooksRestController {
 		return ResponseEntity.ok(resp);
 	}
 
-	@PostMapping("book/genre")
+	@PostMapping("books/genre")
 	public ResponseEntity<RespDTO> findBookByGenre(@RequestBody AuthorByGenreReqDTO genericReqDTO,Pageable pageable) {
 
 		RespDTO resp = new RespDTO();
@@ -155,7 +155,7 @@ public class BooksRestController {
 	}
 
 	
-	@PostMapping("book/title")
+	@PostMapping("books/title")
 	public  ResponseEntity<RespDTO> findBookByTitle(@Valid @RequestBody AuthorByTitleReqDTO genericReqDTO,Pageable pageable) {
 		
 		RespDTO resp = new RespDTO();
@@ -182,7 +182,7 @@ public class BooksRestController {
 		return ResponseEntity.ok(resp);
 	}
 	
-	@PostMapping("book/isbn")
+	@PostMapping("books/isbn")
 	public  ResponseEntity<RespDTO> findBookByIsbn(@Valid @RequestBody AuthorByIsbnReqDTO genericReqDTO,Pageable pageable) {
 		
 		RespDTO resp = new RespDTO();
